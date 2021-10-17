@@ -1,0 +1,17 @@
+﻿version: '3.4'
+
+services:
+  client:
+    image: helloarchy/projects/client
+    build:
+      context: Client
+      dockerfile: Dockerfile
+    ports:
+      - 8080:80
+  projects:
+    image: helloarchy/projects/projects
+    build:
+      context: Projects
+      dockerfile: Dockerfile
+    ports:
+      - 5000:80

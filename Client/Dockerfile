@@ -1,6 +1,6 @@
 ﻿FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env
+COPY . ./app
 WORKDIR /app
-COPY . ./
 
 RUN dotnet publish -c Release -o output
 FROM nginx:alpine

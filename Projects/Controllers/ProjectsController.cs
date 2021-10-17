@@ -29,6 +29,11 @@ namespace Projects.Controllers
                 Description = project.Description,
                 IsComplete = project.IsComplete
             };
+        
+        private bool ProjectExists(long id)
+        {
+            return _context.Projects.Any(e => e.Id == id);
+        }
 
 
         // GET: api/projects
@@ -87,12 +92,23 @@ namespace Projects.Controllers
         // POST: api/projects
         // To protect from over-posting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Project>> PostProject(Project project)
+        public async Task<ActionResult<ProjectDTO>> PostProject(ProjectDTO projectDto)
         {
+            var project = new Project
+            {
+                Title = projectDto.Title,
+                Description = projectDto.Description,
+                IsComplete = projectDto.IsComplete
+            };
+            
             _context.Projects.Add(project);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetProject), new { id = project.Id }, project);
+            return CreatedAtAction(
+                nameof(GetProject), 
+                new { id = project.Id }, 
+                ToProjectDto(project)
+                );
         }
 
         // DELETE: api/projects/5
@@ -109,11 +125,6 @@ namespace Projects.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool ProjectExists(long id)
-        {
-            return _context.Projects.Any(e => e.Id == id);
         }
     }
 }

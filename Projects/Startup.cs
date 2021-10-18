@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Net.Http.Headers;
 using Projects.Models;
 
 namespace Projects
@@ -41,6 +41,10 @@ namespace Projects
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Projects v1"));
+                app.UseCors(policy => 
+                    policy.WithOrigins("http://localhost:5000", "https://localhost:5001")
+                        .AllowAnyMethod()
+                        .WithHeaders(HeaderNames.ContentType));
             }
 
             app.UseHttpsRedirection();

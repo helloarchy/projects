@@ -1,0 +1,44 @@
+﻿@using System.Net.Http;
+@inject HttpClient Http;
+@using System.Net.Http.Json;
+@using Client.Models
+
+@page "/Projects"
+
+<h3>Projects</h3>
+
+@if (_projects == null)
+{
+    <p>No projects are available at this time :(</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Created</th>
+            <th>Description</th>
+            <th>IsCompleted</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var project in _projects)
+        {
+            <tr>
+                <td>@project.Title</td>
+                <td>@project.Created.ToShortDateString()</td>
+                <td>@project.Description</td>
+                <td>@project.IsCompleted</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Project[] _projects;
+    
+    protected override async Task OnInitializedAsync() => 
+        _projects = await Http.GetFromJsonAsync<Project[]>("http://localhost:5000/api/projects");
+}

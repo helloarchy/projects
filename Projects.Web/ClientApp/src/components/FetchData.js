@@ -8,8 +8,8 @@ export class FetchData extends Component {
     this.state = { forecasts: [], loading: true };
   }
 
-  componentDidMount() {
-    this.populateWeatherData();
+  async componentDidMount() {
+    await this.populateWeatherData();
   }
 
   static renderForecastsTable(forecasts) {

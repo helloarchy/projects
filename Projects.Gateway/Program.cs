@@ -1,3 +1,5 @@
+using Microsoft.Net.Http.Headers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,6 +17,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(policy => 
+    policy.WithOrigins("https://localhost:7012", "http://localhost:5012")
+        .AllowAnyMethod()
+        .WithHeaders(HeaderNames.ContentType));
 
 app.UseHttpsRedirection();
 

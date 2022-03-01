@@ -1,15 +1,15 @@
 ﻿{
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/projects",
-      "DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/projects",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "http://localhost:5248",
-          "Port": 443
+          "Host": "localhost",
+          "Port": 6000
         }
       ],
-      "UpstreamPathTemplate": "/projects",
+      "UpstreamPathTemplate": "/api/projects",
       "UpstreamHttpMethod": [ "Get" ]
     }
   ],

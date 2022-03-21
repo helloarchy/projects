@@ -8,10 +8,18 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8080:80
+  gateway:
+    image: helloarchy/projects/gateway
+    build:
+      context: Projects.Gateway
+      dockerfile: Dockerfile
+    ports:
+      - 5001:443
+      - 5000:80
   projects:
     image: helloarchy/projects/projects
     build:
       context: Projects.Projects
       dockerfile: Dockerfile
     ports:
-      - 5000:80
+      - 6000:80

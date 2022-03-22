@@ -2,16 +2,17 @@
 
 services:
   client:
+
     image: helloarchy/projects/web
     build:
-      context: .
+      context: ../Web/Projects/
       dockerfile: ../Web/Projects/Dockerfile
     ports:
       - 8080:80
   gateway:
     image: helloarchy/projects/gateway
     build:
-      context: .
+      context: ../Gateway/Projects.Gateway
       dockerfile: ../Gateway/Projects.Gateway/Dockerfile
     ports:
       - 5001:443
@@ -19,7 +20,7 @@ services:
   projects:
     image: helloarchy/projects/projects
     build:
-      context: .
+      context: ../Services/Project/Project.API
       dockerfile: ../Services/Project/Project.API/Dockerfile
     ports:
       - 6000:80

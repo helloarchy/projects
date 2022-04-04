@@ -1,0 +1,28 @@
+﻿version: '3.4'
+
+services:
+
+  client:
+    image: helloarchy/projects/web
+    build:
+      context: .
+      dockerfile: Web/Projects/Dockerfile
+    ports:
+      - 3000:3000
+
+  gateway:
+    image: helloarchy/projects/gateway
+    build:
+      context: .
+      dockerfile: Gateway/Projects.Gateway/Dockerfile
+    ports:
+      - 5001:443
+      - 5000:80
+
+  projects:
+    image: helloarchy/projects/services/projects
+    build:
+      context: Services/Project/Project.API
+      dockerfile: Dockerfile
+    ports:
+      - 6000:6000

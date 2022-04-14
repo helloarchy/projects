@@ -5,8 +5,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 6000
+          "Host": "service.project.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/projects",

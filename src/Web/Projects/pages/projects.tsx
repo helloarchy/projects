@@ -1,16 +1,36 @@
 import Link from 'next/link'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+
 import Layout from '../components/Layout'
 
-const ProjectsPage = () => (
-    <Layout title="Projects | All Projects">
-        <h1>Projects</h1>
-        <p>This is the page for all projects</p>
-        <p>
-            <Link href="/">
-                <a>Go home</a>
-            </Link>
-        </p>
-    </Layout>
+type Project = {
+  title: string;
+}
+
+type Data = {
+  projects: Project[]
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  // Fetch data from external API
+  const res = await fetch(`http://localhost:6000/api/projects`)
+  const data: Data = await res.json()
+
+  // Pass data to the page via props
+  return { props: { data } }
+}
+
+const ProjectsPage = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) => (
+  <Layout title='Projects | All Projects'>
+    <h1>Projects</h1>
+    <p>This is the page for all projects</p>
+    {}
+    <p>
+      <Link href='/'>
+        <a>Go home</a>
+      </Link>
+    </p>
+  </Layout>
 )
 
 export default ProjectsPage

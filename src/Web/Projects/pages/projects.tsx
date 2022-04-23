@@ -20,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return { props: { data } };
 };
 
-function renderProjects(projects: Project[]) {
+function renderProjects(projects: Project[] | undefined) {
   {
     if (projects?.length) {
       return (
@@ -40,7 +40,7 @@ const ProjectsPage = ({ data }: InferGetServerSidePropsType<typeof getServerSide
   <Layout title="Projects | All Projects">
     <h1>Projects</h1>
     <p>This is the page for all projects</p>
-    {renderProjects(data.projects)}
+    {renderProjects(data?.projects)}
     <p>
       <Link href="/">
         <a>Go home</a>

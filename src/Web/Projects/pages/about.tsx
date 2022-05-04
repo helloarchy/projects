@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Layout from '../components/Layout'
+import Account from "../components/Account";
 
 const AboutPage = () => (
     <Layout title="About | Next.js + TypeScript Example">
@@ -10,6 +11,7 @@ const AboutPage = () => (
                 <a>Go home</a>
             </Link>
         </p>
+        <Account/>
     </Layout>
 )
 

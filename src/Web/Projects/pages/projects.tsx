@@ -30,6 +30,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     console.log(e)
   }
 
+
+
   // Pass data to the page via props
   return { props: { data } }
 }
@@ -45,6 +47,8 @@ function renderProjects(projects: Project[] | undefined) {
               <li key={project.title}>{project.title}</li>
             ))}
           </ul>
+          <Text>End of projects list.</Text>
+          <Button>Next UI test</Button>
         </div>
       )
     } else {

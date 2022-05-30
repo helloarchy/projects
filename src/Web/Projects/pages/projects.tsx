@@ -1,7 +1,8 @@
-import Link from "next/link";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import Link from 'next/link'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 
-import Layout from "../components/Layout";
+import Layout from '../components/Layout'
+import { Button, Text } from '@nextui-org/react'
 
 type Project = {
   title: string;
@@ -13,40 +14,61 @@ type Data = {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // Fetch data from external API
-  const res = await fetch(`http://localhost:5000/api/projects`);
-  const data: Data = await res.json();
+  let data: Data = {
+    projects: [
+      {
+        title: '',
+      },
+    ],
+  }
+
+  try {
+    const res = await fetch(`http://localhost:5000/api/projects`)
+    data = await res.json()
+  }
+  catch (e) {
+    console.log(e)
+  }
 
   // Pass data to the page via props
-  return { props: { data } };
-};
+  return { props: { data } }
+}
 
 function renderProjects(projects: Project[] | undefined) {
   {
-    if (projects?.length) {
+    if (projects?.length && projects?.length > 0) {
       return (
-        <ul>
-          {projects.map((project: Project) => (
-            <li key={project.title}>{project.title}</li>
-          ))}
-        </ul>
-      );
+        <div>
+          <Text h2>Projects list...</Text>
+          <ul>
+            {projects.map((project: Project) => (
+              <li key={project.title}>{project.title}</li>
+            ))}
+          </ul>
+        </div>
+      )
     } else {
-      return <p>No projects</p>;
+      return (
+        <div>
+          <p>No projects</p>
+          <Button>Next UI test</Button>
+        </div>
+      )
     }
   }
 }
 
 const ProjectsPage = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) => (
-  <Layout title="Projects | All Projects">
+  <Layout title='Projects | All Projects'>
     <h1>Projects</h1>
     <p>This is the page for all projects</p>
     {renderProjects(data?.projects)}
     <p>
-      <Link href="/">
+      <Link href='/'>
         <a>Go home</a>
       </Link>
     </p>
   </Layout>
-);
+)
 
-export default ProjectsPage;
+export default ProjectsPage

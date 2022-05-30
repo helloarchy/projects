@@ -10,6 +10,7 @@
     "test": "jest --watch"
   },
   "dependencies": {
+    "@nextui-org/react": "^1.0.0-beta.7",
     "next": "^12.1.5",
     "next-auth": "^4.3.4",
     "react": "^18.0.0",

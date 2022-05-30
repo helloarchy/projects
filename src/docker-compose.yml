@@ -30,6 +30,18 @@ services:
     depends_on:
       - project.svc
 
+  identity:
+    container_name: identity
+    image: helloarchy/projects/identity
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - 4000:80
+    networks:
+      - frontend
+      - backend
+
   project.svc:
     container_name: service.project.api
     image: helloarchy/projects/services/project.api

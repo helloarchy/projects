@@ -1,20 +1,35 @@
-import NextAuth from "next-auth"
-import IdentityServer4 from "next-auth/providers/identity-server4";
+import NextAuth from 'next-auth'
+import IdentityServer4 from 'next-auth/providers/identity-server4'
 
 export default NextAuth({
-    // Configure one or more authentication providers
-    providers: [
-        IdentityServer4({
-            id: "identity-server4",
-            name: "IdentityServer4",
-            issuer:  process.env.IDENTITY_SERVER_ISSUER,
-            clientId: process.env.IDENTITY_SERVER_CLIENT_ID,
-            clientSecret: process.env.IDENTITY_SERVER_CLIENT_SECRET
-        })
-    ],
-    callbacks: {
-        session({ session, token, user }) {
-            return session // The return type will match the one returned in `useSession()`
-        },
+  // Configure one or more authentication providers
+  providers: [
+    IdentityServer4({
+      id: 'identity-server',
+      name: 'IdentityServer',
+      type: 'oauth',
+      wellKnown: 'https://localhost:4001/.well-known/openid-configuration',
+      authorization: { params: { scope: 'openid profile scope2 offline_access' } },
+      checks: ["pkce", "state"],
+      idToken: true,
+      issuer:  process.env.IDENTITY_SERVER_ISSUER,
+      clientId: process.env.IDENTITY_SERVER_CLIENT_ID,
+      clientSecret: process.env.IDENTITY_SERVER_CLIENT_SECRET
+    }),
+  ],
+  callbacks: {
+    async jwt({ token, account }) {
+      // Persist the OAuth access_token to the token right after sign in
+      if (account) {
+        token.accessToken = account.access_token
+      }
+      return token
     },
-});
+    async session({ session, token, user }) {
+      // Send properties to the client, like an access_token from a provider.
+      session.accessToken = token.accessToken
+      return session
+    },
+  },
+  secret: process.env.IDENTITY_SERVER_CLIENT_SECRET,
+})

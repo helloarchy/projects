@@ -58,6 +58,7 @@ yarn-error.log*
 
 # dotenv environment variables file
 .env
+.env*
 
 deployment_keys
 deployment_keys-private

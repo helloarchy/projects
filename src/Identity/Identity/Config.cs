@@ -1,4 +1,5 @@
-﻿using Duende.IdentityServer.Models;
+﻿using Duende.IdentityServer;
+using Duende.IdentityServer.Models;
 
 namespace Identity;
 
@@ -21,6 +22,37 @@ public static class Config
     public static IEnumerable<Client> Clients =>
         new Client[]
         {
+            // Web Projects frontend client
+            new Client
+            {
+                ClientId = "web-projects",
+                ClientName = "Web Projects",
+                ClientSecrets = { new Secret("secret".Sha256()) },
+
+                // RequireClientSecret = false,
+
+                AllowedGrantTypes = GrantTypes.Code,
+                AllowOfflineAccess = true,
+                RedirectUris = { "http://localhost:3000/api/auth/callback/identity-server" },
+
+                /*PostLogoutRedirectUris =
+                {
+                    "http://localhost:3000"
+                },*/
+
+                AllowedCorsOrigins =
+                {
+                    "http://localhost:3000"
+                },
+
+                AllowedScopes =
+                {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    "scope2"
+                }
+            },
+
             // m2m client credentials flow client
             new Client
             {

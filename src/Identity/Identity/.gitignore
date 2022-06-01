@@ -457,3 +457,6 @@ $RECYCLE.BIN/
 /AspIdUsers.db
 /AspIdUsers.db-shm
 /AspIdUsers.db-wal
+
+# Keys
+/keys/*

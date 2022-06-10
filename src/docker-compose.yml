@@ -4,7 +4,7 @@ services:
 
   client:
     container_name: web
-    image: helloarchy/projects/web
+    image: helloarchy/projects/web/projects
     build:
       context: .
       dockerfile: web/projects/dockerfile
@@ -26,9 +26,9 @@ services:
       - frontend
       - backend
     links:
-      - project.svc
+      - project-svc
     depends_on:
-      - project.svc
+      - project-svc
 
   identity:
     container_name: identity
@@ -42,7 +42,7 @@ services:
       - frontend
       - backend
 
-  project.svc:
+  project-svc:
     container_name: service.project.api
     image: helloarchy/projects/services/project.api
     build:

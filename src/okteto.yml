@@ -1,0 +1,124 @@
+name: src
+
+# The build section defines how to build the images of your development environment
+# More info: https://www.okteto.com/docs/reference/manifest/#build
+build:
+
+  # You can use the following env vars to refer to this image in your deploy commands:
+  #  - OKTETO_BUILD_CLIENT_REGISTRY: image registry
+  #  - OKTETO_BUILD_CLIENT_REPOSITORY: image repo
+  #  - OKTETO_BUILD_CLIENT_IMAGE: image name
+  #  - OKTETO_BUILD_CLIENT_TAG: image tag
+  client:
+    context: .
+    dockerfile: web\projects\dockerfile
+    image: okteto.dev/projects:web-projects
+
+  # You can use the following env vars to refer to this image in your deploy commands:
+  #  - OKTETO_BUILD_GATEWAY_REGISTRY: image registry
+  #  - OKTETO_BUILD_GATEWAY_REPOSITORY: image repo
+  #  - OKTETO_BUILD_GATEWAY_IMAGE: image name
+  #  - OKTETO_BUILD_GATEWAY_TAG: image tag
+  gateway:
+    context: .
+    dockerfile: gateway\projects.gateway\dockerfile
+    image: okteto.dev/projects:gateway
+
+  # You can use the following env vars to refer to this image in your deploy commands:
+  #  - OKTETO_BUILD_IDENTITY_REGISTRY: image registry
+  #  - OKTETO_BUILD_IDENTITY_REPOSITORY: image repo
+  #  - OKTETO_BUILD_IDENTITY_IMAGE: image name
+  #  - OKTETO_BUILD_IDENTITY_TAG: image tag
+  identity:
+    context: .
+    dockerfile: identity\identity\dockerfile
+    image: okteto.dev/projects:identity
+
+  # You can use the following env vars to refer to this image in your deploy commands:
+  #  - OKTETO_BUILD_PROJECT-SVC_REGISTRY: image registry
+  #  - OKTETO_BUILD_PROJECT-SVC_REPOSITORY: image repo
+  #  - OKTETO_BUILD_PROJECT-SVC_IMAGE: image name
+  #  - OKTETO_BUILD_PROJECT-SVC_TAG: image tag
+  project-svc:
+    context: .
+    dockerfile: services\project\project.api\dockerfile
+    image: okteto.dev/projects:services-project-api
+
+# The deploy section defines how to deploy your development environment
+# More info: https://www.okteto.com/docs/reference/manifest/#deploy
+deploy:
+  compose:
+    file: docker-compose.yml
+    services:
+      - client
+      - gateway
+      - identity
+      - project-svc
+
+# The dependencies section defines other git repositories to be deployed as part of your development environment
+# More info: https://www.okteto.com/docs/reference/manifest/#dependencies
+# dependencies:
+#   - https://github.com/okteto/sample
+
+
+# The dev section defines how to activate a development container
+# More info: https://www.okteto.com/docs/reference/manifest/#dev
+dev:
+  client:
+    image: okteto/dotnetcore:3
+    command: bash
+    workdir: /my-project
+    remote: 22000
+    sync:
+      - .:/my-project
+    forward:
+      - 3000:3000
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - VSTEST_HOST_DEBUG=0
+      - VSTEST_RUNNER_DEBUG=0
+  gateway:
+    image: okteto/dotnetcore:3
+    command: bash
+    workdir: /app
+    remote: 22000
+    sync:
+      - gateway:/app
+    forward:
+      - 8443:443
+      - 8080:80
+      - 8444:443
+      - 8081:80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - VSTEST_HOST_DEBUG=0
+      - VSTEST_RUNNER_DEBUG=0
+  identity:
+    image: okteto/dotnetcore:3
+    command: bash
+    workdir: /app
+    remote: 22000
+    sync:
+      - identity:/app
+    forward:
+      - 8080:80
+      - 8081:80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - VSTEST_HOST_DEBUG=0
+      - VSTEST_RUNNER_DEBUG=0
+  project-svc:
+    image: okteto/dotnetcore:3
+    command: bash
+    workdir: /app
+    remote: 22000
+    sync:
+      - .:/app
+    forward:
+      - 8080:80
+      - 8081:80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - VSTEST_HOST_DEBUG=0
+      - VSTEST_RUNNER_DEBUG=0
+

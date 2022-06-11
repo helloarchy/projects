@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react'
-import { createTheme, NextUIProvider } from '@nextui-org/react'
+import { NextUIProvider } from '@nextui-org/react'
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
 
 import { config } from '@fortawesome/fontawesome-svg-core'
@@ -10,9 +10,6 @@ config.autoAddCss = false
 import '../styles/globals.css'
 import darkTheme from '../themes/dark'
 import lightTheme from '../themes/light'
-
-
-const theme = createTheme(darkTheme)
 
 function MyApp({
  Component,
@@ -28,7 +25,7 @@ function MyApp({
           dark: darkTheme.className!
         }}
       >
-        <NextUIProvider theme={theme}>
+        <NextUIProvider>
           <Component {...pageProps} />
         </NextUIProvider>
       </NextThemesProvider>

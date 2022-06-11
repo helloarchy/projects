@@ -1,21 +1,22 @@
-import { Theme } from '@nextui-org/react'
+import { createTheme, Theme } from '@nextui-org/react'
+import { BaseTheme } from '@nextui-org/react/types/theme/types'
+
 import sharedTheme from './shared'
 
-const theme: Theme = {
-  theme: {
-    colors: {
-      ...sharedTheme.theme?.colors
-    },
-    space: {},
-    fonts: {
-    }
+const theme: BaseTheme = {
+  ...sharedTheme, // Extend the common themes
+  colors: {
+    primaryLight: '#ff0000',
+  },
+  fonts: {
+    sans: "'Playfair Display', 'Raleway'"
   }
 }
 
-const lightTheme: Theme = {
-  ...sharedTheme,
+const lightTheme: Theme = createTheme({
   type: "light",
+  className: "light-theme",
   theme
-}
+});
 
 export default lightTheme;

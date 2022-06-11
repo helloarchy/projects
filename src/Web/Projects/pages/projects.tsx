@@ -30,8 +30,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     console.log(e)
   }
 
-
-
   // Pass data to the page via props
   return { props: { data } }
 }

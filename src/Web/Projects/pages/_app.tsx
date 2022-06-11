@@ -3,6 +3,10 @@ import { SessionProvider } from 'next-auth/react'
 import { createTheme, NextUIProvider } from '@nextui-org/react'
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
 
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+config.autoAddCss = false
+
 import '../styles/globals.css'
 import darkTheme from '../themes/dark'
 import lightTheme from '../themes/light'

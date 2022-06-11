@@ -3,10 +3,11 @@ import sharedTheme from './shared'
 
 const theme: Theme = {
   theme: {
-    colors: {},
+    colors: {
+      ...sharedTheme.theme?.colors
+    },
     space: {},
     fonts: {
-
     }
   }
 }

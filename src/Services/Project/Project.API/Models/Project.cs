@@ -2,9 +2,9 @@
 
 public class Project
 {
-    public long Id { get; set; }
-    public string Title { get; set; }
-    public string Description { get; set; }
+    public long Id { get; init; }
+    public string Title { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
     public DateTime Created { get; set; }
     public bool IsComplete { get; set; }
     public string? SomeSecretField { get; set; }

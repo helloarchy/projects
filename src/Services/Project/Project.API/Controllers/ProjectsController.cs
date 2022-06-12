@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Project.API.Interfaces;
 using Project.API.Models;
 
 namespace Project.API.Controllers
@@ -8,11 +8,11 @@ namespace Project.API.Controllers
     [ApiController]
     public class ProjectsController : ControllerBase
     {
-        private readonly ProjectContext _context;
+        private readonly IProjectProvider _projectProvider;
 
-        public ProjectsController(ProjectContext context)
+        public ProjectsController(IProjectProvider projectProvider)
         {
-            _context = context;
+            _projectProvider = projectProvider;
         }
 
         /**
@@ -29,25 +29,31 @@ namespace Project.API.Controllers
 
         // GET: api/Projects
         [HttpGet]
-        public async Task<List<ProjectDto>> GetProjects()
+        public async Task<IActionResult> GetProjects()
         {
-            return await _context.Projects
-                .Select(x => ToProjectDto(x))
-                .ToListAsync();
+            var result = await _projectProvider.GetProjectsAsync();
+            if (result.IsSuccess)
+            {
+                return Ok(result.Projects);
+            }
+
+            return NotFound();
         }
 
         // GET: api/Projects/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ProjectDto>> GetProject(long id)
         {
-            var project = await _context.Projects.FindAsync(id);
+            // TODO: Move to Provider
+            /*var project = await _context.Projects.FindAsync(id);
 
             if (project == null)
             {
                 return NotFound();
             }
 
-            return ToProjectDto(project);
+            return ToProjectDto(project);*/
+            return Ok();
         }
 
         // PUT: api/Projects/5
@@ -55,7 +61,8 @@ namespace Project.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProject(long id, ProjectDto projectDto)
         {
-            if (id != projectDto.Id)
+            // TODO: Move to Provider
+            /*if (id != projectDto.Id)
             {
                 return BadRequest();
             }
@@ -79,7 +86,8 @@ namespace Project.API.Controllers
                 return NotFound();
             }
 
-            return NoContent();
+            return NoContent();*/
+            return Ok();
         }
 
         // POST: api/Projects
@@ -87,7 +95,8 @@ namespace Project.API.Controllers
         [HttpPost]
         public async Task<ActionResult<ProjectDto>> CreateProject(ProjectDto projectDto)
         {
-            var project = new Models.Project
+            // TODO: Move to Provider
+            /*var project = new Models.Project
             {
                 Title = projectDto.Title,
                 Description = projectDto.Description,
@@ -100,14 +109,16 @@ namespace Project.API.Controllers
             return CreatedAtAction(
                 nameof(GetProject),
                 new {id = project.Id},
-                ToProjectDto(project));
+                ToProjectDto(project));*/
+            return Ok();
         }
 
         // DELETE: api/Projects/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProject(long id)
         {
-            var project = await _context.Projects.FindAsync(id);
+            // TODO: Move to Provider
+            /*var project = await _context.Projects.FindAsync(id);
             if (project == null)
             {
                 return NotFound();
@@ -116,12 +127,15 @@ namespace Project.API.Controllers
             _context.Projects.Remove(project);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return NoContent();*/
+            return Ok();
         }
 
         private bool ProjectExists(long id)
         {
-            return _context.Projects.Any(e => e.Id == id);
+            // TODO: Move to Provider
+            //return _context.Projects.Any(e => e.Id == id);
+            return true;
         }
     }
 }

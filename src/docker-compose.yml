@@ -6,8 +6,8 @@ services:
     container_name: web
     image: helloarchy/projects/web/projects
     build:
-      context: .
-      dockerfile: web/projects/dockerfile
+      context: ./web/projects/
+      dockerfile: Dockerfile
     ports:
       - 3000:3000
     networks:
@@ -17,8 +17,8 @@ services:
     container_name: gateway
     image: helloarchy/projects/gateway
     build:
-      context: .
-      dockerfile: gateway/projects.gateway/dockerfile
+      context: ./gateway/projects.gateway
+      dockerfile: Dockerfile
     ports:
       - 5001:443
       - 5000:80
@@ -34,8 +34,8 @@ services:
     container_name: identity
     image: helloarchy/projects/identity
     build:
-      context: .
-      dockerfile: dockerfile
+      context: ./identity/identity
+      dockerfile: Dockerfile
     ports:
       - 4000:80
     networks:
@@ -43,15 +43,23 @@ services:
       - backend
 
   project-svc:
-    container_name: service.project.api
-    image: helloarchy/projects/services/project.api
+    container_name: service.project
+    image: helloarchy/projects/services/project
     build:
-      context: Services/Project/Project.API
-      dockerfile: dockerfile
+      context: ./services/project/project.api
+      dockerfile: Dockerfile
     ports:
       - 6000:80
     networks:
       - backend
+    depends_on:
+      - project-db
+
+  project-db:
+    image: "mcr.microsoft.com/mssql/server"
+    environment:
+      SA_PASSWORD: "${PROJECT_DB_PASSWORD}"
+      ACCEPT_EULA: "Y"
 
 networks:
   frontend:

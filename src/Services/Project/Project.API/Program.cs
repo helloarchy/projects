@@ -3,11 +3,15 @@ using Project.API.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var dbPassword = builder.Configuration["Database:Password"];
+var connection = $"Server=db;Database=master;User=sa;Password={dbPassword};";
+
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ProjectContext>(opt =>
 {
-    opt.UseInMemoryDatabase("Project");
+    // opt.UseInMemoryDatabase("Project");
+    opt.UseSqlServer(connection);
 });
 
 builder.Services.AddEndpointsApiExplorer();

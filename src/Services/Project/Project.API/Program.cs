@@ -40,6 +40,16 @@ builder.Services.AddScoped<IProjectProvider, ProjectProvider>();
 
 var app = builder.Build();
 
+// Apply migrations
+using (var serviceScope = app.Services.GetService<IServiceScopeFactory>()?.CreateScope())
+{
+    if (serviceScope != null)
+    {
+        var context = serviceScope.ServiceProvider.GetRequiredService<ProjectContext>();
+        context.Database.Migrate();
+    }
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

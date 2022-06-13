@@ -17,6 +17,8 @@ public class ProjectProvider : IProjectProvider
         _context = context;
         _logger = logger;
         _mapper = mapper;
+        
+        SeedData();
     }
 
     public async Task<(bool IsSuccess, IEnumerable<ProjectDto> Projects, string ErrorMessage)> GetProjectsAsync()
@@ -147,5 +149,46 @@ public class ProjectProvider : IProjectProvider
     public async Task<bool> ProjectExists(Guid id)
     {
         return _context.Projects != null && await _context.Projects.AnyAsync(e => e.Id == id);
+    }
+    
+    private void SeedData()
+    {
+        if (_context.Projects != null && _context.Projects.Any())
+        {
+            return;
+        }
+
+        var firstProject = new Models.Project
+        {
+            Title = "First Project",
+            Created = DateTime.Now,
+            Description = "Lorem ipsum dolor sit amet",
+            IsComplete = true
+        };
+        
+        var secondProject = new Models.Project
+        {
+            Title = "Second Project",
+            Created = DateTime.Now,
+            Description = "Lorem ipsum dolor sit amet",
+            IsComplete = false
+        };
+        
+        var thirdProject = new Models.Project
+        {
+            Title = "Third Project",
+            Created = DateTime.Now,
+            Description = "Lorem ipsum dolor sit amet",
+            IsComplete = false
+        };
+
+        if (_context.Projects != null)
+        {
+            _context.Projects.Add(firstProject);
+            _context.Projects.Add(secondProject);
+            _context.Projects.Add(thirdProject);
+
+            _context.SaveChanges();
+        }
     }
 }

@@ -2,7 +2,7 @@
 
 public class Project
 {
-    public Guid Id { get; init; }
+    public Guid Id { get; } = new ();
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public DateTime Created { get; set; }

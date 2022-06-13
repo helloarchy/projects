@@ -5,7 +5,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "service.project.api",
+          "Host": "service.project",
           "Port": 80
         }
       ],

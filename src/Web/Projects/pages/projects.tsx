@@ -5,7 +5,7 @@ import Layout from '../components/Layout'
 import { Button, Text } from '@nextui-org/react'
 
 type Project = {
-  title: string;
+  title: string
 }
 
 type Data = {
@@ -23,10 +23,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   try {
-    const res = await fetch(`http://localhost:5000/api/projects`)
+    const endpoint = `${process.env.GATEWAY}/api/project`
+    console.log(`Sending request to: ${endpoint}`)
+
+    const res = await fetch(endpoint)
     data = await res.json()
-  }
-  catch (e) {
+
+    console.log('Fetched data...')
+    console.dir(data, { depth: null })
+  } catch (e) {
     console.log(e)
   }
 
@@ -60,13 +65,15 @@ function renderProjects(projects: Project[] | undefined) {
   }
 }
 
-const ProjectsPage = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) => (
-  <Layout title='Projects | All Projects'>
+const ProjectsPage = ({
+  data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => (
+  <Layout title="Projects | All Projects">
     <h1>Projects</h1>
     <p>This is the page for all projects</p>
     {renderProjects(data?.projects)}
     <p>
-      <Link href='/'>
+      <Link href="/">
         <a>Go home</a>
       </Link>
     </p>

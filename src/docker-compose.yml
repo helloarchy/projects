@@ -48,6 +48,11 @@ services:
     build:
       context: ./services/project/project.api
       dockerfile: Dockerfile
+    environment:
+      PROJECT_DB_PASSWORD: "${PROJECT_DB_PASSWORD}"
+      PROJECT_DB_SERVER: "${PROJECT_DB_SERVER}"
+      PROJECT_DB_NAME: "${PROJECT_DB_NAME}"
+      PROJECT_DB_USER: "${PROJECT_DB_USER}"
     ports:
       - 6000:80
     networks:
@@ -60,6 +65,11 @@ services:
     environment:
       SA_PASSWORD: "${PROJECT_DB_PASSWORD}"
       ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+    ports:
+      - "6101:1433"
+    networks:
+      - backend
 
 networks:
   frontend:

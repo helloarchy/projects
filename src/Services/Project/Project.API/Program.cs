@@ -1,7 +1,9 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Project.API.Database;
+using Project.API.Interfaces;
 using Project.API.Profiles;
+using Project.API.Providers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,9 @@ builder.Services.AddDbContext<ProjectContext>(opt =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Dependency Injection
+builder.Services.AddScoped<IProjectProvider, ProjectProvider>();
 
 var app = builder.Build();
 

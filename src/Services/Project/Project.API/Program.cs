@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Project.API.Database;
 using Project.API.Interfaces;
@@ -6,9 +7,6 @@ using Project.API.Profiles;
 using Project.API.Providers;
 
 var builder = WebApplication.CreateBuilder(args);
-
-var dbPassword = builder.Configuration["Database:Password"];
-var connection = $"Server=db;Database=master;User=sa;Password={dbPassword};";
 
 // Add AutoMapper
 var mapperConfig = new MapperConfiguration(config =>
@@ -18,13 +16,22 @@ var mapperConfig = new MapperConfiguration(config =>
 var mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
-// Add services to the container.
-builder.Services.AddControllers();
+// Add Database
+var connectionStringBuilder = new SqlConnectionStringBuilder
+{
+    Password = builder.Configuration["Database:Password"] ?? Environment.GetEnvironmentVariable("PROJECT_DB_PASSWORD"),
+    ["Server"] = builder.Configuration["Database:Server"] ?? Environment.GetEnvironmentVariable("PROJECT_DB_SERVER"),
+    ["Database"] = builder.Configuration["Database:DatabaseName"] ?? Environment.GetEnvironmentVariable("PROJECT_DB_NAME"),
+    UserID = builder.Configuration["Database:UserId"] ?? Environment.GetEnvironmentVariable("PROJECT_DB_USER")
+};
+
 builder.Services.AddDbContext<ProjectContext>(opt =>
 {
-    opt.UseSqlServer(connection);
+    opt.UseSqlServer(connectionStringBuilder.ConnectionString);
 });
 
+// Add services to the container.
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

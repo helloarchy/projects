@@ -5,7 +5,10 @@ import Layout from '../components/Layout'
 import { Button, Text } from '@nextui-org/react'
 
 type Project = {
+  id: string
   title: string
+  description: string
+  isComplete: boolean
 }
 
 type Data = {
@@ -13,13 +16,9 @@ type Data = {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  // Fetch data from external API
+  let projects: Project[] = []
   let data: Data = {
-    projects: [
-      {
-        title: '',
-      },
-    ],
+    projects
   }
 
   try {
@@ -27,16 +26,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     console.log(`Sending request to: ${endpoint}`)
 
     const res = await fetch(endpoint)
-    data = await res.json()
+    data.projects = await res.json()
 
-    console.log('Fetched data...')
-    console.dir(data, { depth: null })
+    console.log('Fetched data.')
   } catch (e) {
     console.log(e)
   }
 
-  // Pass data to the page via props
-  return { props: { data } }
+  return {
+    props: {
+      data
+    },
+  }
 }
 
 function renderProjects(projects: Project[] | undefined) {
@@ -65,19 +66,21 @@ function renderProjects(projects: Project[] | undefined) {
   }
 }
 
-const ProjectsPage = ({
-  data,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => (
-  <Layout title="Projects | All Projects">
-    <h1>Projects</h1>
-    <p>This is the page for all projects</p>
-    {renderProjects(data?.projects)}
-    <p>
-      <Link href="/">
-        <a>Go home</a>
-      </Link>
-    </p>
-  </Layout>
-)
+const ProjectsPage = (
+  { data }: InferGetServerSidePropsType<typeof getServerSideProps>,
+) => {
+  return (
+    <Layout title='Projects | All Projects'>
+      <h1>Projects</h1>
+      <p>This is the page for all projects</p>
+      {renderProjects(data?.projects)}
+      <p>
+        <Link href='/'>
+          <a>Go home</a>
+        </Link>
+      </p>
+    </Layout>
+  )
+}
 
 export default ProjectsPage

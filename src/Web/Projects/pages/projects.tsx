@@ -2,14 +2,9 @@ import Link from 'next/link'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 
 import Layout from '../components/Layout'
-import { Button, Text } from '@nextui-org/react'
-
-type Project = {
-  id: string
-  title: string
-  description: string
-  isComplete: boolean
-}
+import { Button, Container, Grid, Text } from '@nextui-org/react'
+import { Project } from '../types/project'
+import ProjectCard from '../components/ProjectCard'
 
 type Data = {
   projects: Project[]
@@ -46,11 +41,13 @@ function renderProjects(projects: Project[] | undefined) {
       return (
         <div>
           <Text h2>Projects list...</Text>
-          <ul>
+          <Grid.Container gap={2} justify={"center"}>
             {projects.map((project: Project) => (
-              <li key={project.title}>{project.title}</li>
+              <Grid xs={12} sm={4}>
+                <ProjectCard project={project} />
+              </Grid>
             ))}
-          </ul>
+          </Grid.Container>
           <Text>End of projects list.</Text>
           <Button>Next UI test</Button>
         </div>

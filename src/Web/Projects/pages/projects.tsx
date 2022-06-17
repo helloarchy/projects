@@ -13,7 +13,7 @@ type Data = {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   let projects: Project[] = []
   let data: Data = {
-    projects
+    projects,
   }
 
   try {
@@ -30,7 +30,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      data
+      data,
     },
   }
 }
@@ -41,9 +41,9 @@ function renderProjects(projects: Project[] | undefined) {
       return (
         <div>
           <Text h2>Projects list...</Text>
-          <Grid.Container gap={2} justify={"center"}>
+          <Grid.Container gap={2} justify={'center'}>
             {projects.map((project: Project) => (
-              <Grid xs={12} sm={4}>
+              <Grid xs={12} sm={4} key={project.id}>
                 <ProjectCard project={project} />
               </Grid>
             ))}
@@ -63,16 +63,16 @@ function renderProjects(projects: Project[] | undefined) {
   }
 }
 
-const ProjectsPage = (
-  { data }: InferGetServerSidePropsType<typeof getServerSideProps>,
-) => {
+const ProjectsPage = ({
+  data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
-    <Layout title='Projects | All Projects'>
+    <Layout title="Projects | All Projects">
       <h1>Projects</h1>
       <p>This is the page for all projects</p>
       {renderProjects(data?.projects)}
       <p>
-        <Link href='/'>
+        <Link href="/">
           <a>Go home</a>
         </Link>
       </p>

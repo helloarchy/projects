@@ -1,5 +1,14 @@
 import { Project } from '../types/project'
-import { Button, Card, Col, Divider, Link, Row, Spacer, Text } from '@nextui-org/react'
+import {
+  Button,
+  Card,
+  Col,
+  Divider,
+  Link,
+  Row,
+  Spacer,
+  Text,
+} from '@nextui-org/react'
 
 type Props = {
   project: Project
@@ -19,10 +28,7 @@ const ProjectCard = ({ project }: Props) => {
         <Col>
           <Row>
             <Col>
-              <Link
-                icon
-                href={''}
-              >
+              <Link icon href={''}>
                 View source
               </Link>
             </Col>
@@ -34,7 +40,9 @@ const ProjectCard = ({ project }: Props) => {
             </Col>
             <Spacer />
             <Col>
-              <Button>More info</Button>
+              <Link href={`projects/${encodeURI(project.title)}`}>
+                <Button>More info</Button>
+              </Link>
             </Col>
           </Row>
         </Col>

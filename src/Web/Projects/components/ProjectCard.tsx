@@ -21,7 +21,7 @@ const ProjectCard = ({ project }: Props) => {
       <Divider />
       <Card.Body>
         <Text>Completed? {project.isComplete ? 'Yes' : 'No'}</Text>
-        <Text>{project.description}</Text>
+        <Text>{project.shortDescription}</Text>
       </Card.Body>
       <Divider />
       <Card.Footer>
@@ -40,7 +40,7 @@ const ProjectCard = ({ project }: Props) => {
             </Col>
             <Spacer />
             <Col>
-              <Link href={`projects/${encodeURI(project.title)}`}>
+              <Link href={`projects/${encodeURI(project.title)}?id=${project.id}`}>
                 <Button>More info</Button>
               </Link>
             </Col>

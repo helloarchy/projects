@@ -63,16 +63,16 @@ function renderProjects(projects: Project[] | undefined) {
   }
 }
 
-const ProjectsPage = ({
-  data,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const ProjectsPage = (
+  { data }: InferGetServerSidePropsType<typeof getServerSideProps>,
+) => {
   return (
-    <Layout title="Projects | All Projects">
+    <Layout title='Projects | All Projects'>
       <h1>Projects</h1>
       <p>This is the page for all projects</p>
       {renderProjects(data?.projects)}
       <p>
-        <Link href="/">
+        <Link href='/'>
           <a>Go home</a>
         </Link>
       </p>

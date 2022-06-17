@@ -1,6 +1,9 @@
 export interface Project {
   id: string
   title: string
-  description: string
+  created: Date
   isComplete: boolean
+  imageSource: string
+  shortDescription: string
+  fullDescriptionMdx: string
 }

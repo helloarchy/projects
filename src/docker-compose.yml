@@ -8,6 +8,8 @@ services:
     build:
       context: ./web/projects/
       dockerfile: Dockerfile
+    environment:
+      GATEWAY: "${GATEWAY}"
     ports:
       - 3000:3000
     networks:

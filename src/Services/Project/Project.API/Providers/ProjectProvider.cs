@@ -75,8 +75,11 @@ public class ProjectProvider : IProjectProvider
                 {
                     // Update the project
                     project.Title = projectDto.Title;
-                    project.Description = projectDto.Description;
                     project.IsComplete = projectDto.IsComplete;
+                    project.Created = projectDto.Created;
+                    project.ImageSource = projectDto.ImageSource;
+                    project.ShortDescription = projectDto.ShortDescription;
+                    project.FullDescriptionMdx = projectDto.FullDescriptionMdx;
 
                     await _context.SaveChangesAsync();
                     
@@ -104,8 +107,11 @@ public class ProjectProvider : IProjectProvider
             var project = new Models.Project
             {
                 Title = projectDto.Title,
-                Description = projectDto.Description,
-                IsComplete = projectDto.IsComplete
+                IsComplete = projectDto.IsComplete,
+                Created = projectDto.Created,
+                ImageSource = projectDto.ImageSource,
+                ShortDescription = projectDto.ShortDescription,
+                FullDescriptionMdx = projectDto.FullDescriptionMdx
             };
 
             await _context.Projects.AddAsync(project);
@@ -162,24 +168,102 @@ public class ProjectProvider : IProjectProvider
         {
             Title = "First Project",
             Created = DateTime.Now,
-            Description = "Lorem ipsum dolor sit amet",
-            IsComplete = true
+            IsComplete = true,
+            ImageSource = "https://cataas.com/cat",
+            ShortDescription = "Lorem ipsum dolor sit amet",
+            FullDescriptionMdx = @"# Heading (rank 1)
+## Heading 2
+### 3
+#### 4
+##### 5
+###### 6
+
+> Block quote
+
+* Unordered
+* List
+
+1. Ordered
+2. List
+
+A paragraph, introducing a thematic break:
+
+---
+
+```js
+some.code()
+```
+
+a [link](https://example.com), an ![image](./image.png), some *emphasis*,
+something **strong**, and finally a little `code()`."
         };
         
         var secondProject = new Models.Project
         {
             Title = "Second Project",
             Created = DateTime.Now,
-            Description = "Lorem ipsum dolor sit amet",
-            IsComplete = false
+            IsComplete = true,
+            ImageSource = "https://cataas.com/cat",
+            ShortDescription = "Lorem ipsum dolor sit amet",
+            FullDescriptionMdx = @"# Heading (rank 1)
+## Heading 2
+### 3
+#### 4
+##### 5
+###### 6
+
+> Block quote
+
+* Unordered
+* List
+
+1. Ordered
+2. List
+
+A paragraph, introducing a thematic break:
+
+---
+
+```js
+some.code()
+```
+
+a [link](https://example.com), an ![image](./image.png), some *emphasis*,
+something **strong**, and finally a little `code()`."
         };
         
         var thirdProject = new Models.Project
         {
             Title = "Third Project",
             Created = DateTime.Now,
-            Description = "Lorem ipsum dolor sit amet",
-            IsComplete = false
+            IsComplete = true,
+            ImageSource = "https://cataas.com/cat",
+            ShortDescription = "Lorem ipsum dolor sit amet",
+            FullDescriptionMdx = @"# Heading (rank 1)
+## Heading 2
+### 3
+#### 4
+##### 5
+###### 6
+
+> Block quote
+
+* Unordered
+* List
+
+1. Ordered
+2. List
+
+A paragraph, introducing a thematic break:
+
+---
+
+```js
+some.code()
+```
+
+a [link](https://example.com), an ![image](./image.png), some *emphasis*,
+something **strong**, and finally a little `code()`."
         };
 
         if (_context.Projects != null)

@@ -56,7 +56,7 @@ const ProjectPage = (
       <Text>This is the project page for project {project?.title ?? null} with id {project?.id ?? null}</Text>
 
       <div className={'wrapper'}>
-        <MDXRemote {...data.fullDescriptionMdx} />
+        <MDXRemote {...data.fullDescriptionMdx} lazy />
       </div>
     </>
   )

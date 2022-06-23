@@ -40,7 +40,11 @@ const ProjectCard = ({ project }: Props) => {
             </Col>
             <Spacer />
             <Col>
-              <Link href={`projects/${encodeURI(project.title)}?id=${project.id}`}>
+              <Link
+                href={`projects/${encodeURI(project.title)}?id=${encodeURI(
+                  project.id,
+                )}`}
+              >
                 <Button>More info</Button>
               </Link>
             </Col>

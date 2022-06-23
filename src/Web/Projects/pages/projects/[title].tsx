@@ -3,9 +3,11 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { Container, Link, Text } from '@nextui-org/react'
 import { serialize } from 'next-mdx-remote/serialize'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import NextLink from 'next/link'
 
 import { Project } from '../../types/project'
+import Layout from '../../components/Layout'
 
 type Data = {
   project: Project | null
@@ -59,28 +61,25 @@ const ProjectPage = ({
   if (!project?.id) {
     const { title } = router.query
     return (
-      <Container>
-        <Text>
-          Project {`'${title}'`} not found.
+      <Layout title={`Projects | ${project?.title}`}>
+        <Container>
+          <Text h1>Project {`'${title}'`} not found.</Text>
           <NextLink href={'/projects'}>
-            <Link>Return to all projects</Link>
+            <Link underline block>
+              Return to all projects
+            </Link>
           </NextLink>
-        </Text>
-      </Container>
+        </Container>
+      </Layout>
     )
   }
 
   return (
-    <>
-      <Text>
-        This is the project page for project {project?.title ?? '[not found]'}{' '}
-        with id {project?.id ?? '[not found]'}
-      </Text>
-
+    <Layout title={`Projects | Not Found`}>
       <Container>
         <MDXRemote {...data.fullDescriptionMdx} lazy />
       </Container>
-    </>
+    </Layout>
   )
 }
 

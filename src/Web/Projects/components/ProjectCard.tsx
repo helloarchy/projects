@@ -26,15 +26,18 @@ const ProjectCard = ({ project }: Props) => {
       <Divider />
       <Card.Footer>
         <Col>
-          <Row>
+          <Row justify={'flex-end'}>
             <Col>
-              <Link icon href={''}>
+              <Link
+                icon
+                href={''}
+              >
                 View source
               </Link>
             </Col>
           </Row>
           <Spacer />
-          <Row>
+          <Row justify={'flex-end'}>
             <Col>
               <Button>Goto Live</Button>
             </Col>

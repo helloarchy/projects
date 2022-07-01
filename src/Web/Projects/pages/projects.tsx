@@ -5,6 +5,7 @@ import Layout from '../components/Layout'
 import { Button, Container, Grid, Text } from '@nextui-org/react'
 import { Project } from '../types/project'
 import ProjectCard from '../components/ProjectCard'
+import NextLink from 'next/link'
 
 type Data = {
   projects: Project[]
@@ -43,27 +44,22 @@ const ProjectsPage = ({
     <Layout title="Projects | All Projects">
       {projects?.length && projects?.length > 0 ? (
         <Container>
-          <Text h2>Projects list...</Text>
-          <Grid.Container
-            gap={2}
-            justify={'center'}
-          >
+          <Text h2>Projects</Text>
+          <Grid.Container gap={2} justify={'center'} wrap={'wrap'}>
             {projects.map((project: Project) => (
-              <Grid
-                xs={12}
-                sm={4}
-                key={project.id}
-              >
-                <ProjectCard project={project} />
+              <Grid xs={12} sm={7} md={5} lg={4} xl={3}>
+                <ProjectCard key={project.id} project={project} />
               </Grid>
             ))}
           </Grid.Container>
         </Container>
       ) : (
-        <div>
-          <p>No projects</p>
-          <Button>Next UI test</Button>
-        </div>
+        <Container>
+          <Text h2>No projects</Text>
+          <NextLink href={'/'}>
+            <Button>Next UI test</Button>
+          </NextLink>
+        </Container>
       )}
     </Layout>
   )

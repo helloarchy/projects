@@ -15,9 +15,21 @@ type Props = {
 }
 
 const ProjectCard = ({ project }: Props) => {
+  const defaultImageSource = 'https://via.placeholder.com/350x350'
+  const defaultImageAlt = 'Placeholder image'
+
   return (
     <Card>
-      <Card.Header>{project.title}</Card.Header>
+      <Card.Header>
+        <Text h3>{project.title}</Text>
+      </Card.Header>
+      <Card.Image
+        src={project.imageSource ?? defaultImageSource}
+        width={'100%'}
+        height={340}
+        objectFit={'cover'}
+        alt={project.imageDescription ?? defaultImageAlt}
+      />
       <Divider />
       <Card.Body>
         <Text>Completed? {project.isComplete ? 'Yes' : 'No'}</Text>
@@ -28,10 +40,7 @@ const ProjectCard = ({ project }: Props) => {
         <Col>
           <Row justify={'flex-end'}>
             <Col>
-              <Link
-                icon
-                href={''}
-              >
+              <Link icon href={''}>
                 View source
               </Link>
             </Col>

@@ -64,7 +64,7 @@ const ProjectPage = ({
       <Layout title={`Projects | ${project?.title}`}>
         <Container>
           <Text h1>Project {`'${title}'`} not found.</Text>
-          <NextLink href={'/projects'}>
+          <NextLink href={'/projects'} passHref>
             <Link underline block>
               Return to all projects
             </Link>

@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 import NextLink from 'next/link'
 
 import { Project } from '../../types/project'
-import Layout from '../../components/Layout'
+import Layout from '../../components/Layout/Layout'
 
 type Data = {
   project: Project | null
@@ -64,8 +64,14 @@ const ProjectPage = ({
       <Layout title={`Projects | ${project?.title}`}>
         <Container>
           <Text h1>Project {`'${title}'`} not found.</Text>
-          <NextLink href={'/projects'} passHref>
-            <Link underline block>
+          <NextLink
+            href={'/projects'}
+            passHref
+          >
+            <Link
+              underline
+              block
+            >
               Return to all projects
             </Link>
           </NextLink>
@@ -77,7 +83,10 @@ const ProjectPage = ({
   return (
     <Layout title={`Projects | Not Found`}>
       <Container>
-        <MDXRemote {...data.fullDescriptionMdx} lazy />
+        <MDXRemote
+          {...data.fullDescriptionMdx}
+          lazy
+        />
       </Container>
     </Layout>
   )

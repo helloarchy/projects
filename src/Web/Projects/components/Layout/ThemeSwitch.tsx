@@ -8,15 +8,12 @@ const ThemeSwitch = () => {
   const { isDark, type } = useTheme()
 
   return (
-    <div>
-      The current theme is: {type}
-      <Switch
-        checked={isDark}
-        onChange={(e) => setTheme(e.target.checked ? 'dark' : 'light')}
-        iconOn={<FontAwesomeIcon icon={faSun} />}
-        iconOff={<FontAwesomeIcon icon={faMoon} />}
-      />
-    </div>
+    <Switch
+      checked={isDark}
+      onChange={(e) => setTheme(e.target.checked ? 'dark' : 'light')}
+      iconOn={<FontAwesomeIcon icon={faMoon} />}
+      iconOff={<FontAwesomeIcon icon={faSun} />}
+    />
   )
 }
 

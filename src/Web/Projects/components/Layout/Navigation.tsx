@@ -5,21 +5,21 @@ const Navigation = () => {
   return (
     <>
       <nav>
-        <Link href='/'>
+        <Link href="/pages">
           <a>Home</a>
         </Link>{' '}
         |{' '}
-        <Link href='/about'>
+        <Link href="/pages/about">
           <a>About</a>
         </Link>{' '}
         |{' '}
-        <Link href='/projects'>
+        <Link href="/pages/projects">
           <a>Projects List</a>
         </Link>{' '}
-        | <a href='/api/users'>Users API</a>
+        | <a href="/api/users">Users API</a>
       </nav>
     </>
   )
 }
 
-export default Navigation;
+export default Navigation

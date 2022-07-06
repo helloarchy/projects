@@ -3,7 +3,7 @@ import Layout from '../components/Layout/Layout'
 import Account from '../components/Account'
 
 const AboutPage = () => (
-  <Layout title="About | Next.js + TypeScript Example">
+  <Layout title="About | Archy.dev">
     <h1>About</h1>
     <p>This is the about page</p>
     <p>

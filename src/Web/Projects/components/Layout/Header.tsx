@@ -5,7 +5,7 @@ import ThemeSwitch from './ThemeSwitch'
 
 const Header = () => {
   return (
-    <Container>
+    <>
       <Grid.Container>
         <Grid xs={3}>
           <Text h1>Archy</Text>
@@ -25,7 +25,7 @@ const Header = () => {
         </Grid>
       </Grid.Container>
       <hr />
-    </Container>
+    </>
   )
 }
 

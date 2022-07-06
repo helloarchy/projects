@@ -8,15 +8,12 @@ const theme: BaseTheme = {
   colors: {
     primaryLight: '#ff0000',
   },
-  fonts: {
-    sans: "'Playfair Display', 'Raleway'"
-  }
 }
 
 const lightTheme: Theme = createTheme({
-  type: "light",
-  className: "light-theme",
-  theme
-});
+  type: 'light',
+  className: 'light-theme',
+  theme,
+})
 
-export default lightTheme;
+export default lightTheme

@@ -6,17 +6,14 @@ import sharedTheme from './shared'
 const theme: BaseTheme = {
   ...sharedTheme, // Extend the common themes
   colors: {
-    primaryLight: '#13ff02'
+    primaryLight: '#13ff02',
   },
-  fonts: {
-    sans: "'Times New Roman'"
-  }
 }
 
 const darkTheme: Theme = createTheme({
-  type: "dark",
-  className: "dark-theme",
-  theme
-});
+  type: 'dark',
+  className: 'dark-theme',
+  theme,
+})
 
-export default darkTheme;
+export default darkTheme

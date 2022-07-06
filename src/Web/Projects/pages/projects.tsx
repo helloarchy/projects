@@ -2,9 +2,9 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { Button, Container, Grid, Text } from '@nextui-org/react'
 import NextLink from 'next/link'
 
+import ProjectCard from '../components/ProjectCard'
 import Layout from '../components/Layout/Layout'
 import { Project } from '../types/project'
-import ProjectCard from '../components/ProjectCard'
 
 type Data = {
   projects: Project[]
@@ -40,7 +40,7 @@ const ProjectsPage = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const projects = data.projects
   return (
-    <Layout title="Projects | All Projects">
+    <Layout title="Projects | Archy.dev">
       {projects?.length && projects?.length > 0 ? (
         <Container>
           <Text h2>Projects</Text>

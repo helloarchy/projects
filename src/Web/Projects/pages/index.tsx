@@ -7,8 +7,8 @@ const IndexPage = () => {
   const { data: session } = useSession()
 
   return (
-    <Layout title="Home | Next.js + TypeScript Example">
-      <h1>Hello Next.js 👋</h1>
+    <Layout title="Home | Archy.dev">
+      <h1>Hello, welcome to my portfolio!</h1>
       <p>
         <Link href="/about">
           <a>About</a>

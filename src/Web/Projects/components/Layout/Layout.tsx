@@ -24,7 +24,7 @@ const Layout = ({ children, title = 'Projects @archy.dev' }: Props) => {
         />
       </Head>
       <Header />
-      {children}
+      <Container>{children}</Container>
       <Footer />
     </Container>
   )

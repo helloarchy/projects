@@ -8,13 +8,15 @@ export default NextAuth({
       id: 'identity-server',
       name: 'IdentityServer',
       type: 'oauth',
-      wellKnown: 'https://localhost:4001/.well-known/openid-configuration',
-      authorization: { params: { scope: 'openid profile scope2 offline_access' } },
-      checks: ["pkce", "state"],
+      wellKnown: 'http://localhost:4000/.well-known/openid-configuration',
+      authorization: {
+        params: { scope: 'openid profile scope2 offline_access' },
+      },
+      checks: ['pkce', 'state'],
       idToken: true,
-      issuer:  process.env.IDENTITY_SERVER_ISSUER,
+      issuer: process.env.IDENTITY_SERVER_ISSUER,
       clientId: process.env.IDENTITY_SERVER_CLIENT_ID,
-      clientSecret: process.env.IDENTITY_SERVER_CLIENT_SECRET
+      clientSecret: process.env.IDENTITY_SERVER_CLIENT_SECRET,
     }),
   ],
   callbacks: {

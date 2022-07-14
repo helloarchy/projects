@@ -42,7 +42,8 @@ public static class Config
 
                 AllowedCorsOrigins =
                 {
-                    "http://localhost:3000"
+                    "http://localhost:3000",
+                    "https://localhost:3001"
                 },
 
                 AllowedScopes =

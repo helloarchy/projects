@@ -38,11 +38,27 @@ services:
     build:
       context: ./identity/identity
       dockerfile: Dockerfile
+    environment:
+      IDENTITY_DB_PASSWORD: "${IDENTITY_DB_PASSWORD}"
+      IDENTITY_DB_SERVER: "${IDENTITY_DB_SERVER}"
+      IDENTITY_DB_NAME: "${IDENTITY_DB_NAME}"
+      IDENTITY_DB_USER: "${IDENTITY_DB_USER}"
     ports:
       - 4000:80
       - 4001:443
     networks:
       - frontend
+      - backend
+
+  identity-db:
+    image: "mcr.microsoft.com/mssql/server"
+    environment:
+      SA_PASSWORD: "${IDENTITY_DB_PASSWORD}"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+    ports:
+      - "4101:1433"
+    networks:
       - backend
 
   project-svc:

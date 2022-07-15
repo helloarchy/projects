@@ -2,6 +2,7 @@ using Duende.IdentityServer;
 using Identity.Data;
 using Identity.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -12,9 +13,20 @@ internal static class HostingExtensions
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddRazorPages();
+        
+        // Add Database
+        var connectionStringBuilder = new SqlConnectionStringBuilder
+        {
+            Password = builder.Configuration["Database:Password"] ?? Environment.GetEnvironmentVariable("IDENTITY_DB_PASSWORD"),
+            ["Server"] = builder.Configuration["Database:Server"] ?? Environment.GetEnvironmentVariable("IDENTITY_DB_SERVER"),
+            ["Database"] = builder.Configuration["Database:DatabaseName"] ?? Environment.GetEnvironmentVariable("IDENTITY_DB_NAME"),
+            UserID = builder.Configuration["Database:UserId"] ?? Environment.GetEnvironmentVariable("IDENTITY_DB_USER")
+        };
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+        {
+            options.UseSqlServer(connectionStringBuilder.ConnectionString);
+        });
 
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()

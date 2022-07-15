@@ -29,16 +29,10 @@ public static class Config
                 ClientName = "Web Projects",
                 ClientSecrets = { new Secret("secret".Sha256()) },
 
-                // RequireClientSecret = false,
-
                 AllowedGrantTypes = GrantTypes.Code,
                 AllowOfflineAccess = true,
+                
                 RedirectUris = { "http://localhost:3000/api/auth/callback/identity-server" },
-
-                /*PostLogoutRedirectUris =
-                {
-                    "http://localhost:3000"
-                },*/
 
                 AllowedCorsOrigins =
                 {

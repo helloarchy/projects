@@ -35,7 +35,7 @@ internal static class HostingExtensions
             .AddInMemoryApiScopes(Config.ApiScopes)
             .AddInMemoryClients(Config.Clients)
             .AddAspNetIdentity<ApplicationUser>();
-        
+
         builder.Services.AddAuthentication()
             .AddGoogle(options =>
             {
@@ -67,6 +67,11 @@ internal static class HostingExtensions
         
         app.MapRazorPages()
             .RequireAuthorization();
+
+        app.UseCookiePolicy(new CookiePolicyOptions
+        {
+            MinimumSameSitePolicy = SameSiteMode.Lax
+        });
 
         return app;
     }

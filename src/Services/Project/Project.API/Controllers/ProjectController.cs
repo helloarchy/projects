@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project.API.Interfaces;
 using Project.API.Models;
@@ -6,6 +7,7 @@ namespace Project.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class ProjectController : ControllerBase
     {
         private readonly IProjectProvider _projectProvider;
@@ -14,7 +16,7 @@ namespace Project.API.Controllers
         {
             _projectProvider = projectProvider;
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> GetProjects()
         {
@@ -26,7 +28,7 @@ namespace Project.API.Controllers
 
             return NotFound();
         }
-        
+
         [HttpGet("{id}")]
         public async Task<ActionResult<ProjectDto>> GetProject(Guid id)
         {
@@ -38,7 +40,7 @@ namespace Project.API.Controllers
 
             return NotFound();
         }
-        
+
         // To protect from over-posting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProject(Guid id, ProjectDto projectDto)
@@ -47,12 +49,12 @@ namespace Project.API.Controllers
             {
                 return BadRequest("The project ID does not match the ID of the project provided");
             }
-            
+
             if (!await _projectProvider.ProjectExists(id))
             {
                 return NotFound();
             }
-            
+
             var result = await _projectProvider.UpdateProjectAsync(id, projectDto);
             if (result.IsSuccess)
             {
@@ -61,7 +63,7 @@ namespace Project.API.Controllers
 
             return NotFound();
         }
-        
+
         // To protect from over-posting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<ProjectDto>> CreateProject(ProjectDto projectDto)
@@ -77,7 +79,7 @@ namespace Project.API.Controllers
 
             return BadRequest(result.ErrorMessage);
         }
-        
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProject(Guid id)
         {

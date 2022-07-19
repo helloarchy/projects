@@ -16,15 +16,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     projects,
   }
 
+  let res
   try {
     const endpoint = `${process.env.GATEWAY}/api/project`
     console.log(`Sending request to: ${endpoint}`)
 
-    const res = await fetch(endpoint)
+    res = await fetch(endpoint)
     data.projects = await res.json()
 
     console.log('Fetched data.')
   } catch (e) {
+    console.log('Error fetching projects')
+    console.log(res)
     console.log(e)
   }
 

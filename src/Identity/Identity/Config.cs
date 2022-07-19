@@ -17,22 +17,40 @@ public static class Config
         {
             new ApiScope("scope1"),
             new ApiScope("scope2"),
+            new ApiScope("readProjectApi", "Read Project API")
         };
 
     public static IEnumerable<Client> Clients =>
         new Client[]
         {
+            // Swagger client
+            new()
+            {
+                ClientId = "api_swagger",
+                ClientName = "Swagger UI for Sample API",
+                ClientSecrets = {new Secret("secret".Sha256())}, // TODO: use env var
+
+                AllowedGrantTypes = GrantTypes.Code,
+
+                RedirectUris = {"https://localhost:7101/swagger/oauth2-redirect.html"},
+                AllowedCorsOrigins = {"https://localhost:7101"},
+                AllowedScopes = new List<string>
+                {
+                    "SampleAPI"
+                }
+            },
+
             // Web Projects frontend client
-            new Client
+            new()
             {
                 ClientId = "web-projects",
                 ClientName = "Web Projects",
-                ClientSecrets = { new Secret("secret".Sha256()) },
+                ClientSecrets = {new Secret("secret".Sha256())},
 
                 AllowedGrantTypes = GrantTypes.Code,
                 AllowOfflineAccess = true,
-                
-                RedirectUris = { "http://localhost:3000/api/auth/callback/identity-server" },
+
+                RedirectUris = {"http://localhost:3000/api/auth/callback/identity-server"},
 
                 AllowedCorsOrigins =
                 {
@@ -44,36 +62,37 @@ public static class Config
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
-                    "scope2"
+                    "scope2",
+                    "readProjectApi"
                 }
             },
 
             // m2m client credentials flow client
-            new Client
+            new()
             {
                 ClientId = "m2m.client",
                 ClientName = "Client Credentials Client",
 
                 AllowedGrantTypes = GrantTypes.ClientCredentials,
-                ClientSecrets = { new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256()) },
+                ClientSecrets = {new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256())},
 
-                AllowedScopes = { "scope1" }
+                AllowedScopes = {"scope1"}
             },
 
             // interactive client using code flow + pkce
-            new Client
+            new()
             {
                 ClientId = "interactive",
-                ClientSecrets = { new Secret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0".Sha256()) },
+                ClientSecrets = {new Secret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0".Sha256())},
 
                 AllowedGrantTypes = GrantTypes.Code,
 
-                RedirectUris = { "https://localhost:44300/signin-oidc" },
+                RedirectUris = {"https://localhost:44300/signin-oidc"},
                 FrontChannelLogoutUri = "https://localhost:44300/signout-oidc",
-                PostLogoutRedirectUris = { "https://localhost:44300/signout-callback-oidc" },
+                PostLogoutRedirectUris = {"https://localhost:44300/signout-callback-oidc"},
 
                 AllowOfflineAccess = true,
-                AllowedScopes = { "openid", "profile", "scope2" }
+                AllowedScopes = {"openid", "profile", "scope2"}
             },
         };
 }

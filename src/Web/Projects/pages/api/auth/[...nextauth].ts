@@ -10,7 +10,9 @@ export default NextAuth({
       type: 'oauth',
       wellKnown: 'http://localhost:4000/.well-known/openid-configuration',
       authorization: {
-        params: { scope: 'openid profile scope2 offline_access' },
+        params: {
+          scope: 'openid profile scope2 offline_access readProjectApi',
+        },
       },
       checks: ['pkce', 'state'],
       idToken: true,

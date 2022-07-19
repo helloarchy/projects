@@ -2,12 +2,16 @@ using AutoMapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Project.API.Database;
 using Project.API.Interfaces;
 using Project.API.Profiles;
 using Project.API.Providers;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var identityHostname = builder.Configuration["Identity:Hostname"] ??
+                       Environment.GetEnvironmentVariable("IDENTITY_HOSTNAME");
 
 // Add AutoMapper
 var mapperConfig = new MapperConfiguration(config => { config.AddProfile(new ProjectProfile()); });
@@ -38,8 +42,6 @@ builder.Services.AddScoped<IProjectProvider, ProjectProvider>();
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
-        var identityHostname = builder.Configuration["Identity:Hostname"] ??
-                               Environment.GetEnvironmentVariable("IDENTITY_HOSTNAME");
         options.Authority = identityHostname;
 
         options.TokenValidationParameters = new TokenValidationParameters
@@ -54,6 +56,39 @@ builder.Services.AddAuthorization(options =>
     {
         policy.RequireAuthenticatedUser();
         policy.RequireClaim("scope", "readProjectApi");
+    });
+});
+
+// Add auth via swagger
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.OAuth2,
+        Flows = new OpenApiOAuthFlows
+        {
+            AuthorizationCode = new OpenApiOAuthFlow
+            {
+                AuthorizationUrl = new Uri("https://localhost:5001/connect/authorize"),
+                TokenUrl = new Uri("https://localhost:5001/connect/token"),
+                Scopes = new Dictionary<string, string>
+                {
+                    {"SampleAPI", "API - full access"}
+                }
+            },
+        }
+    });
+
+    // Apply Scheme globally
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference {Type = ReferenceType.SecurityScheme, Id = "oauth2"}
+            },
+            new[] {"SampleAPI"}
+        }
     });
 });
 
@@ -73,7 +108,10 @@ using (var serviceScope = app.Services.GetService<IServiceScopeFactory>()?.Creat
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.OAuthUsePkce();
+    });
 }
 
 app.MapControllers().RequireAuthorization("ApiScope");

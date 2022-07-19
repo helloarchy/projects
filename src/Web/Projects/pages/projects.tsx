@@ -18,10 +18,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   let res
   try {
-    const endpoint = `${process.env.GATEWAY}/api/project`
+    // TODO: debug const endpoint = `${process.env.GATEWAY}/api/project`
+    const endpoint = `http://localhost:6000/project`
+    const req = new Request(endpoint, {
+      headers: new Headers({
+        'X-CSRF': '1',
+      }),
+    })
+
     console.log(`Sending request to: ${endpoint}`)
 
-    res = await fetch(endpoint)
+    res = await fetch(req)
     data.projects = await res.json()
 
     console.log('Fetched data.')

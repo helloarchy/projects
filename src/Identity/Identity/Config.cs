@@ -26,14 +26,14 @@ public static class Config
             // Swagger client
             new()
             {
-                ClientId = "api_swagger",
+                ClientId = "project-service-swagger",
                 ClientName = "Swagger UI for Sample API",
                 ClientSecrets = {new Secret("secret".Sha256())}, // TODO: use env var
 
                 AllowedGrantTypes = GrantTypes.Code,
 
-                RedirectUris = {"https://localhost:7101/swagger/oauth2-redirect.html"},
-                AllowedCorsOrigins = {"https://localhost:7101"},
+                RedirectUris = {"https://localhost:6001/swagger/oauth2-redirect.html"},
+                AllowedCorsOrigins = {"https://localhost:6001"},
                 AllowedScopes = new List<string>
                 {
                     "SampleAPI"
@@ -65,6 +65,24 @@ public static class Config
                     "scope2",
                     "readProjectApi"
                 }
+            },
+            
+            // Project Service
+            new()
+            {
+                ClientId = "project-service",
+
+                // no interactive user, use the clientid/secret for authentication
+                AllowedGrantTypes = GrantTypes.ClientCredentials,
+
+                // secret for authentication
+                ClientSecrets =
+                {
+                    new Secret("secret".Sha256())
+                },
+
+                // scopes that client has access to
+                AllowedScopes = { "readProjectApi" }
             },
 
             // m2m client credentials flow client
